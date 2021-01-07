@@ -1,0 +1,68 @@
+<% if @book_comment.errors %>
+  <ul>
+<% @book_comment.errors.full_messages.each do |message| %>
+  <li><%= message %></li>
+  <% end %>
+  </ul>
+  <% end %>
+
+
+
+<div class="row">
+	<div class="col-md-3">
+
+		<h2>User info</h2>
+<%= render 'users/profile', user: @book.user %>
+
+		<h2>New book</h2>
+ <%= render 'books/newform', book: Book.new %>
+	</div>
+
+	<div class="col-md-9">
+		<h2>Book detail</h2>
+
+		<table class="table">
+
+				<tr>
+					<td>
+						<%= link_to (@book.user) do %>
+						<%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %><br>
+						<%= @book.user.name %>
+						<% end %>
+					</td>
+					<%= render 'books/table', book: @book%>
+					<td><%= link_to @book.title, @book %></td>
+					<td><%= @book.body %></td>
+
+					<div class="comments">
+<p>コメント件数：<%= @book.book_comments.count %></p>
+<% @book.book_comments.each do |book_comment| %>
+  <%= book_comment.comment %>
+<% if book_comment.user == current_user %>
+  <div class="comment-delete">
+    <%= link_to "削除", book_book_comment_path(book_comment.book_id, book_comment.id), method: :delete %>
+  </div>
+  <% end %>
+<% end %>
+
+
+</div>
+<div class="new-comment">
+<%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+  <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに" %>
+  <%= f.submit "送信する" %>
+<% end %>
+</div>
+
+
+          <td>コメント数：<%= @book.book_comments.count %></td>
+
+					<% if @book.user == current_user %>
+						<td><%= link_to "Edit",edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
+						<td><%= link_to "Destroy",@book, method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
+					<% end %>
+				</tr>
+			</table>
+
+	</div>
+</div>
