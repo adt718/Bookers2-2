@@ -3,6 +3,16 @@ class UsersController < ApplicationController
     before_action :authenticate_user!
 
 
+  def followings
+       user = User.find(params[:user_id])
+       @users = user.followings
+  end
+
+  def followers
+     user = User.find(params[:user_id])
+     @users = user.followers
+  end
+
   def show
     @user = User.find(params[:id])
     @books = @user.books
@@ -12,7 +22,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
-  end  
+  end
 
   def edit
     @user = User.find(params[:id])
@@ -25,6 +35,9 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
+
+
+
 
   private
   def user_params

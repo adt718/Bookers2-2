@@ -9,7 +9,6 @@ before_action :authenticate_user!
 
     if @book_comment.save
       redirect_to book_path(@book), notice: "You have created book successfully."
-      abort
     else
       @books = Book.all
       render 'books/show'

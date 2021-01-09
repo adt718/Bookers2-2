@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Followings</h2>
+    <p><%= @user.name %>フォローしているユーザー</p>
+
+      <table class="table table-striped">
+           <thead>
+		      <tr>
+		        <th>image</th>
+		        <th>name</th>
+		        <th></th>
+		        <th></th>
+		      </tr>
+           </thead>
+
+           <% @user.followings.each do |user| %>
+            <table>
+            <tr>
+              <td><%= user.username %>
+              <%= link_to '詳細', user_path(user) %>
+           <tbody>
+            <tr>
+              <td>
+                 <div><%= attachment_image_tag user, :profile_image, :fill, 50, 50, format:'jpeg', class: "pull-left profile-img", fallback: "no_image.jpg" %></div>
+              </td>
+              <td>
+                <%= user.name %>
+              </td>
+              <%= form_for(current_user.active_relationships.build, remote: true) do |f| %>
+              <div><%= hidden_field_tag :followed_id, @user.id %></div>
+              <%= f.submit "Follow", class: "btn btn-primary" %>
+              <% end %>
+              <td>
+                <%= link_to "show",user_path(user.id), class: "user_#{user.id}" %>
+              </td>
+              <td>
+              </table>
+               </td>
+            </tr>
+           </tbody>
+<% end %>
+</table>
+</div>
