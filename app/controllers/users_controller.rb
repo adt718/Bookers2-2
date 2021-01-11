@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
+    @option = "index"
   end
 
   def edit
