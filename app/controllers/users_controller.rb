@@ -6,11 +6,13 @@ class UsersController < ApplicationController
   def followings
        user = User.find(params[:user_id])
        @users = user.followings
+       @option = "index"
   end
 
   def followers
      user = User.find(params[:user_id])
      @users = user.followers
+
   end
 
   def show

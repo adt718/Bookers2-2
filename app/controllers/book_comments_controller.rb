@@ -6,9 +6,8 @@ before_action :authenticate_user!
     @book_comment = BookComment.new(book_comment_params)
     @book_comment.user_id = current_user.id
     @book_comment.book_id =@book.id
-
     if @book_comment.save
-      redirect_to book_path(@book), notice: "You have created book successfully."
+      # redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
       render 'books/show'
@@ -17,9 +16,10 @@ before_action :authenticate_user!
 
 def destroy
 	@book = Book.find(params[:book_id])
-  book_comment = @book.book_comments.find(params[:id])
-	book_comment.destroy
-	redirect_to request.referer
+
+  @book_comment = @book.book_comments.find(params[:id])
+	@book_comment.destroy
+# 	redirect_to request.referer
 end
 
 
