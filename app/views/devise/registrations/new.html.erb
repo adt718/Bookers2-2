@@ -12,7 +12,26 @@
           <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true, class: "email" %>
         </div>
+
         <div class="field">
+        <%= f.label :postcode, 'Postal Code' %><br />
+        <%= f.text_field :postcode, autocomplete: 'postcode', class: 'form-control' %>
+        </div>
+
+        <div class="field">
+        <%= f.label :prefecture_name, 'City' %><br />
+  <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, { prompt: '選択してください' }, class: 'form-control' %>
+        </div>
+
+        <div class="field">
+        <%= f.label :address_city, 'Street' %><br />
+        <%= f.text_field :address_city, autocomplete: 'address_city', class: 'form-control' %>
+        </div>
+
+
+
+
+          <div class="field">
           <%= f.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
